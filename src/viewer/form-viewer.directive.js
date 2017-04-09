@@ -160,12 +160,16 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope) {
                 }
             };
             
-            ctrl.resetPages = function(){
+            ctrl._resetPages = function(){
                 ctrl.prevPages=[];
 
                 ctrl.currentPage=null;
                 ctrl.nextPage = null;
                 ctrl.formSubmitted=false;
+            };
+            
+            ctrl.resetPages = function(){
+                ctrl._resetPages();
                 if(ctrl.options.autoStart){
                     ctrl.beginResponse();
                 }
@@ -248,7 +252,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope) {
             
             scope.$on('mwForm.pageEvents.changePage', function(event,data){
                 if(typeof data.page !== "undefined" && data.page < ctrl.formData.pages.length){
-                   ctrl.resetPages();
+                   ctrl._resetPages();
                    for(var i =0; i < data.page;i++){
                         ctrl.prevPages.push(ctrl.formData.pages[i]);
                    } 
