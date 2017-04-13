@@ -26,7 +26,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope) {
                 ctrl.defaultOptions = {
                     nestedForm: false,
                     autoStart: false,
-                    disableSubmit: false
+                    disableSubmit: false,
+                    elementButtons: []
                 };
                 ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
 
@@ -73,6 +74,20 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope) {
 
                     }
                 }
+            };
+            
+            ctrl.callback = function($event,button,pageElement){
+                $event.preventDefault();
+                $event.stopPropagation();
+                if (button.callback && typeof button.callback === "function") {
+                    button.callback(pageElement);
+                }
+            };
+            ctrl.filter = function(button,pageElement){
+                if (button.filter && typeof button.filter === "function") {
+                    return button.filter(pageElement);
+                }
+                return true;
             };
 
             ctrl.submitForm = function(){
