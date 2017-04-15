@@ -32,7 +32,8 @@
     "font-awesome": "4.x",
     "angular-elastic": "2.x",
     "angular-bootstrap": "^1.2.4",
-    "Sortable": "dev"
+    "Sortable": "dev",
+    "textAngular": "^1.5.16"
   },
   "devDependencies": {
     "bootstrap-sass": "3.x",
