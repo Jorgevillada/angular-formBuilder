@@ -301,6 +301,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
                    ctrl.setCurrentPage(currenPge);
                    $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:currenPge});
                    ctrl.updateNextPageBasedOnAllAnswers();
+                   ctrl.updatePromiseText();
                 }
             });
 
