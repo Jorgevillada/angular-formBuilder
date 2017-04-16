@@ -30,7 +30,7 @@
                                 ng-repeat="button in ctrl.options.elementButtons"
                                 uib-popover="{{button.title | translate}}" popover-trigger="mouseenter" popover-append-to-body popover-placement="right"
                         >
-                            <i class="{{button.icon}}"></i> {{button.mwText}} 
+                            <i class="{{button.icon}}"></i> {{button.mwText[pageElement.question.id]}} 
                         </button>
                  </span>
                 </div>

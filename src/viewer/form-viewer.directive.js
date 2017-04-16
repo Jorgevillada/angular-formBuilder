@@ -112,16 +112,17 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
                     for (var i = 0; i < ctrl.currentPage.elements.length; i++) {
                         for (var j = 0; j < ctrl.options.elementButtons.length; j++) {
                             (function(indexJ, indexI){
-                                ctrl.options.elementButtons[indexJ].mwText = "";
+                                ctrl.options.elementButtons[indexJ].mwText = {};
                                 if (ctrl.options.elementButtons[indexJ].text && typeof ctrl.options.elementButtons[indexJ].text === "function") {
-                                   var prom= ctrl.options.elementButtons[indexJ].text(ctrl.currentPage.elements[indexI]);
-                                    $q.when(prom, function(data){
-                                        ctrl.options.elementButtons[indexJ].mwText = data;
+                                   ctrl.options.elementButtons[indexJ].mwTextPromise= ctrl.options.elementButtons[indexJ].text(ctrl.currentPage.elements[indexI]);
+                                    $q.when(ctrl.options.elementButtons[indexJ].mwTextPromise, function(data){
+                                        console.log("updatePromiseText ",data,ctrl.options.elementButtons[indexJ]);
+                                        ctrl.options.elementButtons[indexJ].mwText[ctrl.currentPage.elements[indexI].question.id] = data;
                                     }, function(){
-                                        ctrl.options.elementButtons[indexJ].mwText = "";
+                                        ctrl.options.elementButtons[indexJ].mwText[ctrl.currentPage.elements[indexI].question.id] = "";
                                     }); 
                                 }else{
-                                    ctrl.options.elementButtons[indexJ].mwText = ctrl.options.elementButtons[indexJ].text;
+                                    ctrl.options.elementButtons[indexJ].mwText[ctrl.currentPage.elements[indexI].question.id] = ctrl.options.elementButtons[indexJ].text;
                                 }
                                 
                             })(j,i);
