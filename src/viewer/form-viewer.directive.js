@@ -126,7 +126,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
                                     button.mwText = button.text;
                                 }
                                 
-                            })(ctrl.options.elementButtons[i],ctrl.currentPage.elements[i]);
+                            })(ctrl.options.elementButtons[j],ctrl.currentPage.elements[i]);
                         }
                     }
                 }
