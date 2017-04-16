@@ -226,20 +226,20 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", "$q", fu
                    && ctrl.options.elementButtons &&  Array.isArray(ctrl.options.elementButtons) && ctrl.options.elementButtons.length > 0      ){
                     for (var i = 0; i < ctrl.currentPage.elements.length; i++) {
                         for (var j = 0; j < ctrl.options.elementButtons.length; j++) {
-                            (function(button, pageElement){
-                                button.mwText = "";
-                                if (button.text && typeof button.text === "function") {
-                                   var prom= button.text(pageElement);
+                            (function(indexJ, indexI){
+                                ctrl.options.elementButtons[indexJ].mwText = "";
+                                if (ctrl.options.elementButtons[indexJ].text && typeof ctrl.options.elementButtons[indexJ].text === "function") {
+                                   var prom= ctrl.options.elementButtons[indexJ].text(ctrl.currentPage.elements[indexI]);
                                     $q.when(prom, function(data){
-                                        button.mwText = data;
+                                        ctrl.options.elementButtons[indexJ].mwText = data;
                                     }, function(){
-                                        button.mwText = "";
+                                        ctrl.options.elementButtons[indexJ].mwText = "";
                                     }); 
                                 }else{
-                                    button.mwText = button.text;
+                                    ctrl.options.elementButtons[indexJ].mwText = ctrl.options.elementButtons[indexJ].text;
                                 }
                                 
-                            })(ctrl.options.elementButtons[j],ctrl.currentPage.elements[i]);
+                            })(j,i);
                         }
                     }
                 }
