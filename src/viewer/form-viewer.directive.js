@@ -106,9 +106,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
 
 
             };
-
-            ctrl.setCurrentPage = function (page) {
-                ctrl.currentPage = page;
+            ctrl.updatePromiseText = function(){
                 if(ctrl.currentPage && ctrl.currentPage.elements && Array.isArray(ctrl.currentPage.elements) && ctrl.currentPage.elements.length > 0
                    && ctrl.options.elementButtons &&  Array.isArray(ctrl.options.elementButtons) && ctrl.options.elementButtons.length > 0      ){
                     for (var i = 0; i < ctrl.currentPage.elements.length; i++) {
@@ -130,6 +128,10 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
                         }
                     }
                 }
+            };
+            
+            ctrl.setCurrentPage = function (page) {
+                ctrl.currentPage = page;
                 if(!page){
 
                     ctrl.buttons.submitForm.visible=false;
@@ -193,6 +195,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
                 if(ctrl.formData.pages.length>0){
                     ctrl.setCurrentPage(ctrl.formData.pages[0]);
                     $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
+                    ctrl.updatePromiseText();
                 }
             };
             
@@ -218,6 +221,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
                 ctrl.setCurrentPage(prevPage);
                 ctrl.updateNextPageBasedOnAllAnswers();
                 $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
+                ctrl.updatePromiseText();
             };
 
             ctrl.goToNextPage= function(){
@@ -227,6 +231,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope,$q
 
                 ctrl.setCurrentPage(ctrl.nextPage);
                 $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
+                ctrl.updatePromiseText();
             };
 
             ctrl.updateNextPageBasedOnAllAnswers = function(){
