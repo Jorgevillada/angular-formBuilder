@@ -241,7 +241,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", "$q", fu
                                     button.mwText = button.text;
                                 }
                                 
-                            })(ctrl.options.elementButtons[i],ctrl.currentPage.elements[i]);
+                            })(ctrl.options.elementButtons[j],ctrl.currentPage.elements[i]);
                         }
                     }
                 }
