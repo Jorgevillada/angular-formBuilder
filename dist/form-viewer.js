@@ -114,7 +114,7 @@ angular.module('mwFormViewer')
 });
 
 
-angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function ($rootScope) {
+angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", "$q", function ($rootScope,$q) {
 
     return {
         replace: true,
@@ -145,7 +145,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                     elementButtons: []
                 };
                 ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
-
+                
                 ctrl.submitStatus='NOT_SUBMITTED';
                 ctrl.formSubmitted=false;
 
@@ -224,6 +224,27 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
 
             ctrl.setCurrentPage = function (page) {
                 ctrl.currentPage = page;
+                if(ctrl.currentPage && ctrl.currentPage.elements && Array.isArray(ctrl.currentPage.elements) && ctrl.currentPage.elements.length > 0
+                   && ctrl.options.elementButtons &&  Array.isArray(ctrl.options.elementButtons) && ctrl.options.elementButtons.length > 0      ){
+                    for (var i = 0; i < ctrl.currentPage.elements.length; i++) {
+                        for (var j = 0; j < ctrl.options.elementButtons.length; j++) {
+                            (function(button, pageElement){
+                                button.mwText = "";
+                                if (button.text && typeof button.text === "function") {
+                                   var prom= button.text(pageElement);
+                                    $q.when(prom, function(data){
+                                        button.mwText = data;
+                                    }, function(){
+                                        button.mwText = "";
+                                    }); 
+                                }else{
+                                    button.mwText = button.text;
+                                }
+                                
+                            })(ctrl.options.elementButtons[i],ctrl.currentPage.elements[i]);
+                        }
+                    }
+                }
                 if(!page){
 
                     ctrl.buttons.submitForm.visible=false;
