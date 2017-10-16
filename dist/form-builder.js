@@ -599,7 +599,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         }
     })
 
-    .directive('mwFormQuestionBuilder', function () {
+    .directive('mwFormQuestionBuilder', ["$rootScope", function ($rootScope) {
 
     return {
         replace: true,
@@ -660,6 +660,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
                 ctrl.formSubmitted=true;
                 if(ctrl.form.$valid){
                     ctrl.onReady();
+                    $rootScope.$broadcast("mwForm.pageEvents.questionModified",{question: ctrl.question});
                 }
 
             };
@@ -729,7 +730,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
             ctrl.options = formPageElementBuilder.options;
         }
     };
-});
+}]);
 
 
 angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
@@ -757,7 +758,7 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
         templateUrl: 'mw-form-paragraph-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: ["$timeout", "FormParagraphBuilderId", function($timeout,FormParagraphBuilderId){
+        controller: ["$timeout", "FormParagraphBuilderId", "$rootScope", function($timeout,FormParagraphBuilderId, $rootScope){
             var ctrl = this;
 
             // Put initialization logic inside `$onInit()`
@@ -770,6 +771,7 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
             ctrl.save=function(){
                 ctrl.formSubmitted=true;
                 if(ctrl.form.$valid){
+                    $rootScope.$broadcast("mwForm.pageEvents.paragraphModified");
                     ctrl.onReady();
                 }
             };
@@ -1136,7 +1138,7 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
         templateUrl: 'mw-form-image-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: ["$timeout", "FormImageBuilderId", "mwFormUuid", function($timeout,FormImageBuilderId, mwFormUuid){
+        controller: ["$timeout", "FormImageBuilderId", "mwFormUuid", "$rootScope", function($timeout,FormImageBuilderId, mwFormUuid,$rootScope){
             var ctrl = this;
             ctrl.id = FormImageBuilderId.next();
             ctrl.formSubmitted=false;
@@ -1145,6 +1147,7 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
                 ctrl.formSubmitted=true;
                 if(ctrl.form.$valid){
                     ctrl.onReady();
+                    $rootScope.$broadcast("mwForm.pageEvents.imageModified");
                 }
             };
 
