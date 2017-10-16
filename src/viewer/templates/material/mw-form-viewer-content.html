@@ -26,7 +26,7 @@
                     <span class="mw-additional-buttons">
                         <button type="button" ng-click="ctrl.callback($event,button,pageElement)"
                                 ng-class="button.cssClass" class="edit-button"
-                                aria-label="{{button.title | translate}}"  aria-hidden="false" ng-if="ctrl.filter(button,pageElement) && !ctrl.readOnly"
+                                aria-label="{{button.title | translate}}"  aria-hidden="false" ng-if="ctrl.filter(button,pageElement)"
                                 ng-repeat="button in ctrl.options.elementButtons"
                         >
                             <md-tooltip ng-if="button.title">{{button.title | translate}}</md-tooltip>
