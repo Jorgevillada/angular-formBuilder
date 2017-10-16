@@ -25,7 +25,7 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
         templateUrl: 'mw-form-image-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormImageBuilderId, mwFormUuid){
+        controller: function($timeout,FormImageBuilderId, mwFormUuid,$rootScope){
             var ctrl = this;
             ctrl.id = FormImageBuilderId.next();
             ctrl.formSubmitted=false;
@@ -34,6 +34,7 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
                 ctrl.formSubmitted=true;
                 if(ctrl.form.$valid){
                     ctrl.onReady();
+                    $rootScope.$broadcast("mwForm.pageEvents.imageModified");
                 }
             };
 

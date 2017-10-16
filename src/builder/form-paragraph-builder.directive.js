@@ -24,7 +24,7 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
         templateUrl: 'mw-form-paragraph-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormParagraphBuilderId){
+        controller: function($timeout,FormParagraphBuilderId, $rootScope){
             var ctrl = this;
 
             // Put initialization logic inside `$onInit()`
@@ -37,6 +37,7 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
             ctrl.save=function(){
                 ctrl.formSubmitted=true;
                 if(ctrl.form.$valid){
+                    $rootScope.$broadcast("mwForm.pageEvents.paragraphModified");
                     ctrl.onReady();
                 }
             };

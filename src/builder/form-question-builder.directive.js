@@ -8,7 +8,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         }
     })
 
-    .directive('mwFormQuestionBuilder', function () {
+    .directive('mwFormQuestionBuilder', function ($rootScope) {
 
     return {
         replace: true,
@@ -69,6 +69,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
                 ctrl.formSubmitted=true;
                 if(ctrl.form.$valid){
                     ctrl.onReady();
+                    $rootScope.$broadcast("mwForm.pageEvents.questionModified",{question: ctrl.question});
                 }
 
             };
