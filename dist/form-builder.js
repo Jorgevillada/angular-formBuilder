@@ -930,7 +930,9 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", fu
             // to make sure bindings have been initialized.
             ctrl.$onInit = function() {
                 ctrl.hoverEdit = false;
-                ctrl.formPage.namedPage = !!ctrl.formPage.name;
+                if(!ctrl.formPage.namedPage){
+                    ctrl.formPage.namedPage = !!ctrl.formPage.name;    
+                }
                 ctrl.isFolded = false;
                 sortElementsByOrderNo();
 
@@ -1279,6 +1281,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
                 return {
                     id: mwFormUuid.get(),
                     number: number,
+                    namedPage: true,
                     name: null,
                     description: null,
                     pageFlow: defaultPageFlow,
