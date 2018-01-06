@@ -21,7 +21,9 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function ($rootSc
             // to make sure bindings have been initialized.
             ctrl.$onInit = function() {
                 ctrl.hoverEdit = false;
-                ctrl.formPage.namedPage = !!ctrl.formPage.name;
+                if(!ctrl.formPage.namedPage){
+                    ctrl.formPage.namedPage = !!ctrl.formPage.name;    
+                }
                 ctrl.isFolded = false;
                 sortElementsByOrderNo();
 

@@ -72,6 +72,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($rootScope)
                 return {
                     id: mwFormUuid.get(),
                     number: number,
+                    namedPage: true,
                     name: null,
                     description: null,
                     pageFlow: defaultPageFlow,
